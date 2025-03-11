@@ -36,6 +36,7 @@ document.body.classList.add(os);
 const splashLogo = document.getElementById("splash-logo");
 const splashVideo = document.getElementById("android-video");
 let platformLoader = document.getElementById("platform-loader");
+let stopped = false;
 
 if (os !== "android") {
   if (splashLogo) {
@@ -90,7 +91,6 @@ requestAnimationFrame(() => {
 
           const fillDuration = 750;
           const drainDuration = 600;
-          let stopped = false;
 
           async function animateFill() {
             return new Promise((resolve) => {
@@ -120,11 +120,13 @@ requestAnimationFrame(() => {
               });
             });
           }
+          let completedOnce = false;
 
           async function loop() {
-            while (!stopped) {
+            while (!stopped || !completedOnce) {
               await animateFill();
               await animateDrain();
+              completedOnce = true
             }
             const splash = document.getElementById("custom-splash");
             // Smoothly fade out the splash
@@ -133,10 +135,6 @@ requestAnimationFrame(() => {
           }
 
           loop();
-          // Optional: Stop loop cleanly on flutter-first-frame
-          window.addEventListener("flutter-first-frame", () => {
-            stopped = true;
-          });
         }
       });
     }
@@ -146,6 +144,7 @@ requestAnimationFrame(() => {
 });
 
 window.addEventListener("flutter-first-frame", function () {
+  stopped = true;
   const splash = document.getElementById("custom-splash");
   if (os === "mac") {
     const loader = document.getElementById("platform-loader");
