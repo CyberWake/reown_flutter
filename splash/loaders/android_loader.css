@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#platform-loader {
+  width: 125px;
+  height: 4px;
+  background-color: #484848;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  visibility: hidden; /* changed from display: none */
+  margin-top: 0px; /* ensures there's spacing below the video or logo */
+}
+
+#platform-loader::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0%;
+  width: 0%;
+  background-color: #8E8E8E;
+  border-radius: 3px;
+}
+
+.android-loader {
+  position: relative;
+  width: 80%;
+  height: 4px;
+  background-color: #222;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.progress-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: #8E8E8E;
+  border-radius: 3px;
+  left: 0;
+  width: 0;
+}
+
+@keyframes indeterminate {
+  0% {
+    left: -40%;
+    width: 40%;
+  }
+  50% {
+    left: 20%;
+    width: 60%;
+  }
+  100% {
+    left: 100%;
+    width: 40%;
+  }
+}
+
+body:not(.android) #platform-loader::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0%;
+    width: 0%;
+    background-color: #8E8E8E;
+    border-radius: 3px;
+}
