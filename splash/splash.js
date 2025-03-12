@@ -5,6 +5,17 @@ function loadLoaderStyle(path) {
   document.head.appendChild(link);
 }
 
+function handleSplashRemoval(){
+  if(stopped){
+    const splash = document.getElementById("custom-splash");
+    // Smoothly fade out the splash
+    splash.classList.add("fade-out");
+    setTimeout(() => splash?.remove(), 1000);
+  }else{
+    completedOnce = true;
+  }
+}
+
 document.documentElement.style.visibility = "hidden";
 window.addEventListener("load", () => {
   document.documentElement.style.visibility = "visible";
@@ -37,6 +48,7 @@ const splashLogo = document.getElementById("splash-logo");
 const splashVideo = document.getElementById("android-video");
 let platformLoader = document.getElementById("platform-loader");
 let stopped = false;
+let completedOnce = false;
 
 if (os !== "android") {
   if (splashLogo) {
@@ -63,6 +75,9 @@ requestAnimationFrame(() => {
       document.body.classList.add("windows-start");
       setTimeout(() => {
         document.body.classList.add("show-loader");
+        setTimeout(() => {
+          handleSplashRemoval();
+        },500);
       }, 1500);
     }, 500);
   } else if (os === "mac") {
@@ -72,6 +87,9 @@ requestAnimationFrame(() => {
       const loader = document.getElementById("platform-loader");
       if (loader) {
         loader.classList.add("animate-progress");
+        setTimeout(() => {
+          handleSplashRemoval();
+        },2000);
       }
     });
   } else if (os === "android") {
@@ -120,7 +138,6 @@ requestAnimationFrame(() => {
               });
             });
           }
-          let completedOnce = false;
 
           async function loop() {
             while (!stopped || !completedOnce) {
@@ -146,7 +163,7 @@ requestAnimationFrame(() => {
 window.addEventListener("flutter-first-frame", function () {
   stopped = true;
   const splash = document.getElementById("custom-splash");
-  if (os === "mac") {
+  if (os === "mac" && completedOnce) {
     const loader = document.getElementById("platform-loader");
     if (loader) {
       loader.classList.add("complete-progress");
@@ -156,7 +173,7 @@ window.addEventListener("flutter-first-frame", function () {
     setTimeout(() => {
       splash?.remove();
     }, 1000); // match CSS transition
-  } else if (os !== "android") {
+  } else if (os !== "android" && completedOnce) {
     if (splash) splash.remove();
   }
 });
