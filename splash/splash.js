@@ -5,17 +5,6 @@ function loadLoaderStyle(path) {
   document.head.appendChild(link);
 }
 
-function handleSplashRemoval(){
-  if(stopped){
-    const splash = document.getElementById("custom-splash");
-    // Smoothly fade out the splash
-    splash.classList.add("fade-out");
-    setTimeout(() => splash?.remove(), 1000);
-  }else{
-    completedOnce = true;
-  }
-}
-
 document.documentElement.style.visibility = "hidden";
 window.addEventListener("load", () => {
   document.documentElement.style.visibility = "visible";
@@ -76,7 +65,14 @@ requestAnimationFrame(() => {
       setTimeout(() => {
         document.body.classList.add("show-loader");
         setTimeout(() => {
-          handleSplashRemoval();
+          if(stopped){
+            const splash = document.getElementById("custom-splash");
+            // Smoothly fade out the splash
+            splash.classList.add("fade-out");
+            setTimeout(() => splash?.remove(), 1000);
+          }else{
+            completedOnce = true;
+          }
         },500);
       }, 1500);
     }, 500);
@@ -92,6 +88,8 @@ requestAnimationFrame(() => {
             loader.classList.add("complete-progress");
             // Allow animation to finish
             setTimeout(() => {
+              const splash = document.getElementById("custom-splash");
+              splash.classList.add("fade-out");
               splash?.remove();
             }, 1000); // match CSS transition
           }else{
