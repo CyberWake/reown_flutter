@@ -73,7 +73,7 @@ requestAnimationFrame(() => {
           }else{
             completedOnce = true;
           }
-        },500);
+        },1000);
       }, 1500);
     }, 500);
   } else if (os === "mac") {
@@ -144,12 +144,15 @@ requestAnimationFrame(() => {
               });
             });
           }
-
+          let completeCount = 0;
           async function loop() {
             while (!stopped || !completedOnce) {
               await animateFill();
               await animateDrain();
-              completedOnce = true
+              if(completeCount>=2){
+                completedOnce = true
+              }
+              completeCount = completeCount + 1;
             }
             const splash = document.getElementById("custom-splash");
             // Smoothly fade out the splash
