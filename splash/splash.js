@@ -88,7 +88,15 @@ requestAnimationFrame(() => {
       if (loader) {
         loader.classList.add("animate-progress");
         setTimeout(() => {
-          handleSplashRemoval();
+          if(stopped){
+            loader.classList.add("complete-progress");
+            // Allow animation to finish
+            setTimeout(() => {
+              splash?.remove();
+            }, 1000); // match CSS transition
+          }else{
+            completedOnce = true;
+          }
         },2000);
       }
     });
