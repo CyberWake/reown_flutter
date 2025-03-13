@@ -13,7 +13,6 @@ window.addEventListener("load", () => {
 const userAgent = navigator.userAgent.toLowerCase();
 let os = detectOS();
 const { suspicious, reason } = checkSpoofing(os);
-console.log("suspicious", suspicious);
 if (suspicious) {
   showBootOptionUI();
   // I want to show a boot loader kind of UI giving options like windows,macos,linux,ipados,ios,android
@@ -40,7 +39,6 @@ function detectOS() {
   // Modern API (Chrome, Edge, etc.)
 
   if (navigator.userAgentData && navigator.userAgentData.platform) {
-    console.log("from here");
     return navigator.userAgentData.platform.toLowerCase(); // e.g., 'macos', 'windows'
   }
 
@@ -63,11 +61,9 @@ function detectOS() {
 }
 
 function checkSpoofing(os) {
-  console.log("os", os);
-  const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-  const height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+  const width = window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  const height = window.visualViewport?.height || window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
   const maxTouchPoints = navigator.maxTouchPoints || 0;
-  console.log(width)
   let suspicious = false;
   let reason = "";
 
@@ -83,7 +79,6 @@ function checkSpoofing(os) {
     case "android":
     case "ios":
     case "ipados":
-      console.log("maxTouchPoints", maxTouchPoints);
       if (width > 1024 && maxTouchPoints < 2) {
         suspicious = true;
         reason = "Large screen with no touch — not expected on mobile";
@@ -94,8 +89,6 @@ function checkSpoofing(os) {
 }
 
 function prepareOS() {
-  console.log("os", os);
-
   if (os == "windows") {
     splashSrc = "boot_icons/windows.svg";
     loadLoaderStyle("splash/loaders/windows_loader.css");
@@ -142,7 +135,6 @@ function handleWindowsLoader() {
 }
 
 function handleMacLoader() {
-  console.log("here");
   document.body.classList.add("show-loader");
 
   requestAnimationFrame(() => {
@@ -239,7 +231,6 @@ function startBooting() {
 
   if (os !== "android") {
     if (splashLogo) {
-      console.log("splashSrc", splashSrc);
       splashLogo.src = splashSrc;
       splashLogo.style.display = "block";
       switch (os) {
@@ -288,7 +279,6 @@ function startBooting() {
   // Flutter ready
   window.addEventListener("flutter-first-frame", function () {
     stopped = true;
-    console.log("flutter rendered");
     const splash = document.getElementById("custom-splash");
     if (os === "macos" && completedOnce) {
       const loader = document.getElementById("platform-loader");
@@ -315,7 +305,6 @@ function setCanvasSize() {
 
   if (appContainer) {
     const [w, h] = sizes[os] || ["100vw", "100vh"];
-    console.log("setting width,height", sizes[os] || ["100vw", "100vh"]);
     appContainer.style.width = w;
     appContainer.style.height = h;
     appContainer.style.margin = "auto";
@@ -341,7 +330,7 @@ function bootOS() {
 function showBootOptionUI() {
   const bootUI = document.createElement("div");
   bootUI.id = "boot-option-ui";
-  const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  const width = window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
   const options =
     width <= 500
@@ -372,7 +361,7 @@ function showBootOptionUI() {
 
   const footer = document.createElement("div");
   footer.className = "boot-footer";
-  footer.innerText = "Use ↑ ↓ arrows or tap to select, press Enter(↵) to boot\nor\nuse mouse(yes we care it)";
+  footer.innerText = "Use 🔼 🔽 arrows or tap to select, press Enter(⏎) to boot\nor\nuse mouse(yes we care it)";
 
   bootUI.appendChild(optionsDiv);
   bootUI.appendChild(footer);
@@ -387,7 +376,6 @@ function showBootOptionUI() {
 
   function bootSelectedOption() {
     const chosen = options[selectedIndex];
-    console.log("Selected boot option:", chosen);
     document.body.removeChild(bootUI);
     window.removeEventListener("keydown", handleKey);
 
