@@ -333,9 +333,9 @@ function showBootOptionUI() {
   const width = window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
   const options =
-    width <= 980
+    width <= "980"
       ? ["android", "ios"]
-      : width <= 1047
+      : width <= "1047"
       ? ["android", "ios", "ipados"]
       : ["windows", "macos", "linux", "android", "ios", "ipados"];
 
