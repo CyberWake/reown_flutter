@@ -35,19 +35,18 @@
   <link rel="stylesheet" href="splash/splash.css">
 </head>
 <body>
-  <div id="custom-splash">
-    <div id="splash-container">
-      <img id="splash-logo" src="boot_icons/default_splash.svg" width="125" hidden>
-      <video id="android-video" class="platform-video" muted playsinline preload="auto" hidden>
-        <source src="boot_icons/android.mp4" type="video/mp4" />
-      </video>
-    </div>
-    <div id="platform-loader" class="progress-container">
+  <div id="app-container">
+    <div id="custom-splash">
+      <div id="splash-container">
+        <img id="splash-logo" src="boot_icons/default_splash.svg" width="125" hidden>
+        <video id="android-video" class="platform-video" muted playsinline preload="auto" hidden>
+          <source src="boot_icons/android.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div id="platform-loader" class="progress-container">
+      </div>
     </div>
   </div>
   <script src="splash/splash.js" defer></script>
-
-  <!-- Flutter mounts here -->
-  <script src="main.dart.js" type="application/javascript"></script>
 </body>
 </html>

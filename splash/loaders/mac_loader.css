@@ -1,4 +1,4 @@
-body.mac #platform-loader {
+body.macos #platform-loader {
   position: absolute;
   bottom: 5vh;
   left: 50%;
@@ -11,11 +11,11 @@ body.mac #platform-loader {
   display: none;
 }
 
-body.mac.show-loader #platform-loader {
+body.macos.show-loader #platform-loader {
   display: block;
 }
 
-body.mac #platform-loader::before {
+body.macos #platform-loader::before {
   content: '';
   position: absolute;
   height: 100%;
@@ -25,7 +25,7 @@ body.mac #platform-loader::before {
 }
 
 /* Animate to 90% */
-body.mac #platform-loader.animate-progress::before {
+body.macos #platform-loader.animate-progress::before {
   animation: fillTo90 2s forwards;
 }
 
@@ -48,6 +48,6 @@ body.mac #platform-loader.animate-progress::before {
 }
 
 /* Final fill from 90% to 100% */
-body.mac #platform-loader.complete-progress::before {
+body.macos #platform-loader.complete-progress::before {
   animation: fillTo100 900ms forwards;
 }
