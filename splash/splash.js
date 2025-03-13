@@ -61,8 +61,16 @@ function detectOS() {
 }
 
 function checkSpoofing(os) {
-  const width = window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-  const height = window.visualViewport?.height || window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+  const width =
+    window.visualViewport?.width ||
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth;
+  const height =
+    window.visualViewport?.height ||
+    window.innerHeight ||
+    document.documentElement.clientHeight ||
+    document.body.clientHeight;
   const maxTouchPoints = navigator.maxTouchPoints || 0;
   let suspicious = false;
   let reason = "";
@@ -321,7 +329,7 @@ function setCanvasSize() {
 }
 
 function bootOS() {
-  setCanvasSize();
+//  setCanvasSize();
   loadFlutter();
   prepareOS();
   startBooting();
@@ -330,12 +338,16 @@ function bootOS() {
 function showBootOptionUI() {
   const bootUI = document.createElement("div");
   bootUI.id = "boot-option-ui";
-  const width = window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  const width =
+    window.visualViewport?.width ||
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth;
 
   const options =
-    width <= "980"
+    Number(width) <= 980
       ? ["android", "ios"]
-      : width <= "1047"
+      : Number(width) <= 1047
       ? ["android", "ios", "ipados"]
       : ["windows", "macos", "linux", "android", "ios", "ipados"];
 
@@ -361,7 +373,8 @@ function showBootOptionUI() {
 
   const footer = document.createElement("div");
   footer.className = "boot-footer";
-  footer.innerText = "Use 🔼 🔽 arrows or tap to select, press Enter(⏎) to boot\nor\nuse mouse(yes we care it)"+ width;
+  footer.innerText =
+    "Use 🔼 🔽 arrows or tap to select, press Enter(⏎) to boot\nor\nuse mouse(yes we care)";
 
   bootUI.appendChild(optionsDiv);
   bootUI.appendChild(footer);
