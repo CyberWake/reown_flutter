@@ -329,7 +329,7 @@ function setCanvasSize() {
 }
 
 function bootOS() {
-//  setCanvasSize();
+  setCanvasSize();
   loadFlutter();
   prepareOS();
   startBooting();
