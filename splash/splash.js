@@ -361,7 +361,7 @@ function showBootOptionUI() {
 
   const footer = document.createElement("div");
   footer.className = "boot-footer";
-  footer.innerText = "Use 🔼 🔽 arrows or tap to select, press Enter(⏎) to boot\nor\nuse mouse(yes we care it)";
+  footer.innerText = "Use 🔼 🔽 arrows or tap to select, press Enter(⏎) to boot\nor\nuse mouse(yes we care it)"+ width;
 
   bootUI.appendChild(optionsDiv);
   bootUI.appendChild(footer);
